@@ -13,11 +13,12 @@ resource "azurerm_virtual_network" "vnet" {
 }
 
 resource "azurerm_subnet" "subnet" {
-  count                                          = length(var.subnet_names)
-  name                                           = var.subnet_names[count.index]
+  for_each = var.subnets
+
+  name                                           = each.key
   resource_group_name                            = data.azurerm_resource_group.network.name
-  address_prefixes                               = [var.subnet_prefixes[count.index]]
+  address_prefixes                               = each.value.address_prefix
   virtual_network_name                           = azurerm_virtual_network.vnet.name
-  enforce_private_link_endpoint_network_policies = lookup(var.subnet_enforce_private_link_endpoint_network_policies, var.subnet_names[count.index], false)
-  service_endpoints                              = lookup(var.subnet_service_endpoints, var.subnet_names[count.index], [])
+  enforce_private_link_endpoint_network_policies = each.value.enforce_private_link_endpoint_network_policies
+  service_endpoints                              = each.value.service_endpoints
 }
