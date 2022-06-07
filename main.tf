@@ -17,7 +17,7 @@ resource "azurerm_subnet" "subnet" {
 
   name                                           = each.key
   resource_group_name                            = data.azurerm_resource_group.network.name
-  address_prefixes                               = each.value.address_prefix
+  address_prefixes                               = [each.value.address_prefix]
   virtual_network_name                           = azurerm_virtual_network.vnet.name
   enforce_private_link_endpoint_network_policies = each.value.enforce_private_link_endpoint_network_policies
   service_endpoints                              = each.value.service_endpoints
