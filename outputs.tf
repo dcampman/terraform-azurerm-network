@@ -18,8 +18,8 @@ output "vnet_address_space" {
   value       = azurerm_virtual_network.vnet.address_space
 }
 
-output "vnet_subnets" {
-  for_each    = var.subnet
-  description = "The ids of subnets created inside the newly created vNet"
-  value       = azurerm_subnet.subnet[each.key].id
-}
+# output "vnet_subnets" {
+#   for_each    = var.subnet
+#   description = "The ids of subnets created inside the newly created vNet"
+#   value       = azurerm_subnet.subnet[each.key].id
+# }
